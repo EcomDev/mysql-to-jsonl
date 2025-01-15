@@ -1,4 +1,7 @@
 name: PHP Package
+env:
+  PHAR_TOOL_VERSION: 1.4.0
+  PHAR_TOOL_REPOSITORY: clue/phar-composer
 on:
   push:
   pull_request:
@@ -26,19 +29,24 @@ jobs:
         php-version:
           - 8.2
           - 8.3
-        io-driver:
-          - eio
-          - uv
+          - 8.4
     steps:
       - uses: actions/checkout@v4
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-          extensions: ${{ matrix.io-driver }}
           tools: composer:v2
           coverage: xdebug3
       - run: composer install
         shell: bash
       - run: composer test
         shell: bash
+      - name: Download build package
+        run: gh release download v${{ env.PHAR_TOOL_VERSION }} -R=${{ env.PHAR_TOOL_REPOSITORY }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Build package
+        run: |
+          chmod +x ./phar-composer-${{ env.PHAR_TOOL_VERSION }}.phar
+          ./phar-composer-${{ env.PHAR_TOOL_VERSION }}.phar build ./ mysql2json
