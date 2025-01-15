@@ -1,0 +1,186 @@
+{
+  "$schema": "https://json-schema.org/draft-04/schema#",
+  "title": "MySQL2JSONL configuration file",
+  "type": "object",
+  "properties": {
+    "config": {
+      "$ref": "#/definitions/configuration",
+      "description": "Configuration settings"
+    }
+  },
+  "required": ["config"],
+  "definitions": {
+    "configuration": {
+      "properties": {
+        "connection": {
+          "$ref": "#/definitions/connection",
+          "description": "MySQL connections settings"
+        },
+        "concurrency": {
+          "type": "integer",
+          "description": "Maximum concurrency used by tool",
+          "default": 4
+        },
+        "batchSize": {
+          "type": "integer",
+          "description": "Batch size for importing data into database",
+          "default": 1000
+        },
+        "includeTables": {
+          "$ref": "#/definitions/tableConditions",
+          "description": "List of tables to include from the database dump"
+        },
+        "excludeTables": {
+          "$ref": "#/definitions/tableConditions",
+          "description": "List of tables to exclude from the database dump"
+        },
+        "importMode": {
+          "$ref": "#/definitions/importMode"
+        }
+      },
+      "required": ["connection"],
+      "additionalProperties": false
+    },
+    "importMode": {
+      "enum": ["truncate", "update"],
+      "default": "truncate"
+    },
+    "matchExpression": {
+      "type": "object",
+      "description": "Match condition for table name",
+      "properties": {
+        "regexp": {
+          "type": "string",
+          "description": "Valid regular expression for a table name, # sign is prohibited as used as delimiter",
+          "pattern": "^[^#]+$"
+        },
+        "startsWith": {
+          "type": "string",
+          "description": "Table name starts with"
+        },
+        "endsWith": {
+          "type": "string",
+          "description": "Table name ends with"
+        },
+        "contains": {
+          "type": "string",
+          "description": "Table name contains"
+        }
+      },
+      "minProperties": 1,
+      "maxProperties": 1
+    },
+    "rowCount": {
+      "type": "object",
+      "properties": {
+        "min": {
+          "type": "integer",
+          "description": "Minimum number of rows for table to be exported"
+        },
+        "max": {
+          "type": "integer",
+          "description": "Maximum number of rows for table to be exported"
+        }
+      },
+      "minProperties": 1,
+      "maxProperties": 1
+    } ,
+    "tableName": {
+      "type": "string",
+      "pattern": "^[0-9a-zA-Z$_\u0080-\uFFFF]+$"
+    },
+    "andCondition": {
+      "type": "array",
+      "description": "Table matching conditions",
+      "items": {
+        "oneOf": [
+          { "$ref": "#/definitions/matchExpression" },
+          { "$ref": "#/definitions/rowCount" },
+          { "$ref": "#/definitions/tableName" }
+        ]
+      }
+    },
+    "tableConditions": {
+      "type": "array",
+      "description": "Table matching conditions",
+      "default": [],
+      "items": {
+        "anyOf": [
+          { "$ref": "#/definitions/matchExpression" },
+          { "$ref": "#/definitions/rowCount" },
+          { "$ref": "#/definitions/tableName" },
+          {
+            "type": "object",
+            "properties": {
+                "and": {"$ref": "#/definitions/andCondition"}
+            }
+          }
+        ]
+      }
+    },
+    "connection": {
+      "type": "object",
+      "properties": {
+        "host": {
+          "type": "string",
+          "description": "Host for MySQL host"
+        },
+        "unixSocket": {
+          "type": "string",
+          "description": "Unix socket path for MySQL connection"
+        },
+        "port": {
+          "type": "integer",
+          "description": "Port for MySQL connection",
+          "default": 3306
+        },
+        "user": {
+          "type": "string",
+          "description": "Username for MySQL connection",
+          "default": "root"
+        },
+        "password": {
+          "type": "string",
+          "description": "Password for MySQL connection",
+          "default": ""
+        },
+        "database": {
+          "type": "string",
+          "description": "Database for MySQL connection"
+        },
+        "charset": {
+          "type": "string",
+          "description": "Charset for MySQL connection",
+          "default": "utf8mb4"
+        },
+        "key": {
+          "type": "string",
+          "description": "Path to public key to use for sha256_password auth method in MySQL connection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "database"
+          ]
+        },
+        {
+          "oneOf": [
+            {
+              "required": [
+                "host"
+              ],
+              "errorMessage": "For connection host or unixSocket must be specified"
+            },
+            {
+              "required": [
+                "unixSocket"
+              ],
+              "errorMessage": "For connection host or unixSocket must be specified"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

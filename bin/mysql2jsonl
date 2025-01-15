@@ -1,0 +1,20 @@
+#!/usr/bin/env php
+<?php
+
+use EcomDev\MySQL2JSONL\Command\ExportCommand;
+use EcomDev\MySQL2JSONL\Command\ImportCommand;
+use Symfony\Component\Console\Application;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$application = new Application(
+    basename(__FILE__),
+    '1.0.0'
+);
+
+$application->addCommands([
+    new ExportCommand(),
+    new ImportCommand(),
+]);
+
+$application->run();
