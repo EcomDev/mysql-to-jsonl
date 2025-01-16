@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft-04/schema#",
+  "title": "MySQL2JSONL configuration file",
+  "type": "object",
+  "properties": {
+    "connection": {
+      "$ref": "#/definitions/connection",
+      "description": "MySQL connections settings"
+    },
+    "includeTables": {
+      "$ref": "#/definitions/tableConditions",
+      "description": "List of tables to include from the database dump"
+    },
+    "excludeTables": {
+      "$ref": "#/definitions/tableConditions",
+      "description": "List of tables to exclude from the database dump"
+    }
+  },
+  "definitions": {
+    "matchExpression": {
+      "type": "object",
+      "description": "Match condition for table name",
+      "properties": {
+        "regexp": {
+          "type": "string",
+          "description": "Valid regular expression for a table name with qualifiers"
+        },
+        "startsWith": {
+          "type": "string",
+          "description": "Table name starts with"
+        },
+        "endsWith": {
+          "type": "string",
+          "description": "Table name ends with"
+        },
+        "contains": {
+          "type": "string",
+          "description": "Table name contains"
+        }
+      },
+      "minProperties": 1,
+      "maxProperties": 1
+    },
+    "rowCount": {
+      "type": "object",
+      "properties": {
+        "min": {
+          "type": "integer",
+          "description": "Minimum number of rows for table to be exported"
+        },
+        "max": {
+          "type": "integer",
+          "description": "Maximum number of rows for table to be exported"
+        }
+      },
+      "minProperties": 1,
+      "maxProperties": 1
+    } ,
+    "tableName": {
+      "type": "string",
+      "pattern": "^[0-9a-zA-Z$_\u0080-\uFFFF]+$"
+    },
+    "tableConditions": {
+      "type": "array",
+      "description": "Table matching conditions",
+      "oneOf": [
+        { "$ref": "#/definitions/matchExpression" },
+        { "$ref": "#/definitions/rowCount" },
+        { "$ref": "#/definitions/tableName" }
+      ]
+    },
+    "connection": {
+      "type": "object",
+      "properties": {
+        "host": {
+          "type": "string",
+          "description": "Host for MySQL host"
+        },
+        "port": {
+          "type": "integer",
+          "description": "Port for MySQL connection",
+          "default": 3306
+        },
+        "user": {
+          "type": "string",
+          "description": "Username for MySQL connection",
+          "default": "root"
+        },
+        "password": {
+          "type": "string",
+          "description": "Password for MySQL connection",
+          "default": ""
+        },
+        "database": {
+          "type": "string",
+          "description": "Database for MySQL connection"
+        },
+        "charset": {
+          "type": "string",
+          "description": "Charset for MySQL connection",
+          "default": "utf8mb4"
+        },
+        "collate": {
+          "type": "string",
+          "description": "Collation for MySQL connection",
+          "default": "utf8mb4_unicode_ci"
+        },
+        "sqlMode": {
+          "type": "string",
+          "description": "SQL_MODE to set for the connection"
+        },
+        "useCompression": {
+          "type": "boolean",
+          "description": "Use compression for MySQL connection"
+        },
+        "key": {
+          "type": "string",
+          "description": "Private key to use for sha256_password auth method in MySQL connection"
+        }
+      },
+      "required": [
+        "host", "database"
+      ]
+    }
+  }
+}
