@@ -2,7 +2,7 @@
 
 namespace EcomDev\MySQL2JSONL\Sql;
 
-class InsertOnDuplicate
+final class InsertOnDuplicate
 {
     public function generate(string $tableName, array $columns, int $rowCount, $onUpdate = []): string
     {

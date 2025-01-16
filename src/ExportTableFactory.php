@@ -2,6 +2,9 @@
 
 namespace EcomDev\MySQL2JSONL;
 
-class ExportTableFactory
+final class ExportTableFactory
 {
+    public function __construct()
+    {
+    }
 }
