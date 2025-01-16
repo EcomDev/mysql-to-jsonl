@@ -10,18 +10,14 @@ declare(strict_types=1);
 namespace EcomDev\MySQL2JSONL;
 
 use Amp\Mysql\MysqlConnectionPool;
-use EcomDev\MySQL2JSONL\Condition\TableNameCondition;
 
-final class ExportTableFactory
+class ExportTable
 {
     public function __construct(
+        private readonly string $tableName,
         private readonly MysqlConnectionPool $connectionPool,
         private readonly ProgressNotifier $progressNotifier,
     ) {
-    }
 
-    public function createExport(string $tableName): ExportTable
-    {
-        return new ExportTable($tableName, $this->connectionPool, $por);
     }
 }

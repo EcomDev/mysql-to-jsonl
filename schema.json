@@ -16,6 +16,7 @@
       "description": "List of tables to exclude from the database dump"
     }
   },
+  "additionalProperties": false,
   "definitions": {
     "matchExpression": {
       "type": "object",
@@ -23,7 +24,8 @@
       "properties": {
         "regexp": {
           "type": "string",
-          "description": "Valid regular expression for a table name with qualifiers"
+          "description": "Valid regular expression for a table name, # sign is prohibited as used as delimiter",
+          "pattern": "^[^#]+$"
         },
         "startsWith": {
           "type": "string",
@@ -60,14 +62,34 @@
       "type": "string",
       "pattern": "^[0-9a-zA-Z$_\u0080-\uFFFF]+$"
     },
+    "andCondition": {
+      "type": "array",
+      "description": "Table matching conditions",
+      "items": {
+        "oneOf": [
+          { "$ref": "#/definitions/matchExpression" },
+          { "$ref": "#/definitions/rowCount" },
+          { "$ref": "#/definitions/tableName" }
+        ]
+      }
+    },
     "tableConditions": {
       "type": "array",
       "description": "Table matching conditions",
-      "oneOf": [
-        { "$ref": "#/definitions/matchExpression" },
-        { "$ref": "#/definitions/rowCount" },
-        { "$ref": "#/definitions/tableName" }
-      ]
+      "default": [],
+      "items": {
+        "anyOf": [
+          { "$ref": "#/definitions/matchExpression" },
+          { "$ref": "#/definitions/rowCount" },
+          { "$ref": "#/definitions/tableName" },
+          {
+            "type": "object",
+            "properties": {
+                "and": {"$ref": "#/definitions/andCondition"}
+            }
+          }
+        ]
+      }
     },
     "connection": {
       "type": "object",
@@ -107,11 +129,13 @@
         },
         "sqlMode": {
           "type": "string",
-          "description": "SQL_MODE to set for the connection"
+          "description": "SQL_MODE to set for the connection",
+          "default": ""
         },
         "useCompression": {
           "type": "boolean",
-          "description": "Use compression for MySQL connection"
+          "description": "Use compression for MySQL connection",
+          "default": false
         },
         "key": {
           "type": "string",

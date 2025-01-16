@@ -25,16 +25,17 @@
   ],
   "autoload": {
     "psr-4": {
-      "EcomDev\\MySQL2JSONL\\": "src"
+      "EcomDev\\MySQL2JSONL\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "EcomDev\\MySQL2JSONL\\": "tests"
+      "EcomDev\\MySQL2JSONL\\": "tests/"
     }
   },
   "scripts": {
     "test": "XDEBUG_MODE=coverage paratest --coverage-text",
+    "test:single-threaded": "XDEBUG_MODE=coverage phpunit --coverage-text",
     "format:check": "phpcs",
     "format:write": "phpcbf"
   },

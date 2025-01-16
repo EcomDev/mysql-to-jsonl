@@ -1,9 +1,20 @@
 <?php
 
-namespace EcomDev\MySQL2JSONL;
+/**
+ * Copyright © EcomDev B.V. All rights reserved.
+ * See LICENSE for license details.
+ */
+
+declare(strict_types=1);
+
+namespace EcomDev\MySQL2JSONL\Condition;
+
+use EcomDev\MySQL2JSONL\TableCondition;
 
 final readonly class StaticTableCondition implements TableCondition
 {
+    use ComposeAnyCondition;
+
     private function __construct(private bool $result)
     {
     }
@@ -22,10 +33,5 @@ final readonly class StaticTableCondition implements TableCondition
     public function isSatisfiedBy(string $tableName, int $rows): bool
     {
         return $this->result;
-    }
-
-    public function withCondition(TableCondition $condition): TableCondition
-    {
-        return $this;
     }
 }
