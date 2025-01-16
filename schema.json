@@ -7,6 +7,16 @@
       "$ref": "#/definitions/connection",
       "description": "MySQL connections settings"
     },
+    "maxConnections": {
+      "type": "integer",
+      "description": "Maximum number of open connection by tool",
+      "default": 50
+    },
+    "idleTimeout": {
+      "type": "integer",
+      "description": "Duration of keeping idle connection open",
+      "default": 60
+    },
     "includeTables": {
       "$ref": "#/definitions/tableConditions",
       "description": "List of tables to include from the database dump"

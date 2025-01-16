@@ -24,6 +24,8 @@ final readonly class Configuration
         public MysqlConfig $connection,
         public TableCondition $includeCondition,
         public TableCondition $excludeCondition,
+        public int $maxConnections,
+        public int $idleTimeout
     ) {
     }
 
@@ -95,12 +97,20 @@ final readonly class Configuration
                 ),
             $includeCondition,
             $excludeCondition,
+            $data->maxConnections,
+            $data->idleTimeout
         );
     }
 
-    public static function fromMySQLConfig(MysqlConfig $config): self
+    public static function fromMySQLConfig(MysqlConfig $config, int $maxConnections = 50, int $idleTimeout = 60): self
     {
-        return new self($config, StaticTableCondition::alwaysTrue(), StaticTableCondition::alwaysFalse());
+        return new self(
+            $config,
+            StaticTableCondition::alwaysTrue(),
+            StaticTableCondition::alwaysFalse(),
+            $maxConnections,
+            $idleTimeout
+        );
     }
 
     public function withIncludeCondition(TableCondition $condition): self
@@ -108,7 +118,9 @@ final readonly class Configuration
         return new self(
             $this->connection,
             $this->includeCondition->withCondition($condition),
-            $this->excludeCondition
+            $this->excludeCondition,
+            $this->maxConnections,
+            $this->idleTimeout,
         );
     }
 
@@ -117,7 +129,9 @@ final readonly class Configuration
         return new self(
             $this->connection,
             $this->includeCondition,
-            $this->excludeCondition->withCondition($condition)
+            $this->excludeCondition->withCondition($condition),
+            $this->maxConnections,
+            $this->idleTimeout,
         );
     }
 

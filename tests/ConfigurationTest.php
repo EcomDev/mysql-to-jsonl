@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace EcomDev\MySQL2JSONL;
 
-
 use Amp\Mysql\MysqlConfig;
 use EcomDev\MySQL2JSONL\Condition\AndTableCondition;
 use EcomDev\MySQL2JSONL\Condition\TableNameCondition;
@@ -210,6 +209,32 @@ class ConfigurationTest extends TestCase
                         {"maxRows": 100}
                      ]}
                   ]
+                }
+                JSON
+            )
+        );
+    }
+
+    #[Test]
+    public function allowsSpecifyingMaxConnectionsAndIdleTimeout()
+    {
+        $this->assertEquals(
+            Configuration::fromMysqlConfig(
+                MysqlConfig::fromAuthority("db", "root", "", "magento")
+                    ->withSqlMode('')
+                    ->withCharset('utf8mb4', 'utf8mb4_unicode_ci'),
+                10,
+                5
+            ),
+            Configuration::fromJSON(
+                <<<JSON
+                {
+                  "connection": {
+                    "host": "db",
+                    "database": "magento"
+                  },
+                  "maxConnections": 10,
+                  "idleTimeout": 5
                 }
                 JSON
             )
