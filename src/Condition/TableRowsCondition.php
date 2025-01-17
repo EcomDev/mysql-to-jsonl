@@ -21,9 +21,7 @@ class TableRowsCondition implements TableCondition
     public function __construct(
         private readonly int $rowsCount,
         private readonly string $type
-    )
-    {
-
+    ) {
     }
 
     public static function minRows(int $minRows): self

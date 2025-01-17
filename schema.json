@@ -10,7 +10,7 @@
     "maxConnections": {
       "type": "integer",
       "description": "Maximum number of open connection by tool",
-      "default": 50
+      "default": 10
     },
     "idleTimeout": {
       "type": "integer",
@@ -26,6 +26,7 @@
       "description": "List of tables to exclude from the database dump"
     }
   },
+  "required": ["connection"],
   "additionalProperties": false,
   "definitions": {
     "matchExpression": {

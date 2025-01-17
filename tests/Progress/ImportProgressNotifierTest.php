@@ -14,7 +14,6 @@ use EcomDev\MySQL2JSONL\TestableConsoleOutput;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-
 class ImportProgressNotifierTest extends TestCase
 {
     #[Test]

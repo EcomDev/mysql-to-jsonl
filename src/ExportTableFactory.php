@@ -22,6 +22,25 @@ final class ExportTableFactory
 
     public function createExport(string $tableName): ExportTable
     {
-        return new ExportTable($tableName, $this->connectionPool, $por);
+        return new ExportTable($tableName, $this->connectionPool, $this->progressNotifier);
+    }
+
+    public function tablesToExport(Configuration $configuration): array
+    {
+        $result = $this->connectionPool->execute(
+            'SELECT TABLE_NAME, TABLE_ROWS FROM information_schema.tables'
+            . ' WHERE TABLE_SCHEMA = SCHEMA() AND TABLE_TYPE = ?',
+            ['BASE TABLE']
+        );
+
+        $tables = [];
+        foreach ($result as $row) {
+            if (!$configuration->includeCondition->isSatisfiedBy($row['TABLE_NAME'], $row['TABLE_ROWS'])
+                || $configuration->excludeCondition->isSatisfiedBy($row['TABLE_NAME'], $row['TABLE_ROWS'])) {
+                continue;
+            }
+            $tables[] = $row['TABLE_NAME'];
+        }
+        return $tables;
     }
 }

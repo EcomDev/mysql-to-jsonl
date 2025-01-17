@@ -7,6 +7,7 @@
     "amphp/file": "~3.2",
     "amphp/mysql": "~3.0",
     "amphp/amp": "~3.0",
+    "amphp/pipeline": "~1.2",
     "revolt/event-loop": "~1.0",
     "symfony/console": "~7.2",
     "justinrainbow/json-schema": "^6.0"
@@ -29,6 +30,9 @@
     }
   },
   "autoload-dev": {
+    "files": [
+      "tests/fixtures.php"
+    ],
     "psr-4": {
       "EcomDev\\MySQL2JSONL\\": "tests/"
     }

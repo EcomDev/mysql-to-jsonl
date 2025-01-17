@@ -105,6 +105,4 @@ class TestableConsoleOutput extends StreamOutput implements ConsoleOutputInterfa
 
         return '';
     }
-
-
 }

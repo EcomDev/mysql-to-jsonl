@@ -15,7 +15,6 @@ final readonly class AnyTableCondition implements TableCondition
 {
     public function __construct(private array $conditions)
     {
-
     }
 
     public function isSatisfiedBy(string $tableName, int $rows): bool

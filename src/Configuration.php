@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace EcomDev\MySQL2JSONL;
 
 use Amp\Mysql\MysqlConfig;
+use Amp\Mysql\MysqlConnectionPool;
 use EcomDev\MySQL2JSONL\Condition\AndTableCondition;
 use EcomDev\MySQL2JSONL\Condition\StaticTableCondition;
 use EcomDev\MySQL2JSONL\Condition\TableNameCondition;
@@ -45,6 +46,7 @@ final readonly class Configuration
             $json,
             flags: JSON_THROW_ON_ERROR
         );
+
         $result = $validator->validate($data, $schema, Constraint::CHECK_MODE_APPLY_DEFAULTS);
 
         if ($result !== Validator::ERROR_NONE) {
@@ -102,7 +104,7 @@ final readonly class Configuration
         );
     }
 
-    public static function fromMySQLConfig(MysqlConfig $config, int $maxConnections = 50, int $idleTimeout = 60): self
+    public static function fromMySQLConfig(MysqlConfig $config, int $maxConnections = 10, int $idleTimeout = 60): self
     {
         return new self(
             $config,
@@ -154,5 +156,14 @@ final readonly class Configuration
                 )
             };
         }
+    }
+
+    public function createConnectionPool(): MysqlConnectionPool
+    {
+        return new MysqlConnectionPool(
+            $this->connection,
+            $this->maxConnections,
+            $this->idleTimeout
+        );
     }
 }
