@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.1.0](https://github.com/EcomDev/mysql-to-jsonl/compare/v1.0.0...v1.1.0) (2025-01-22)
+
+
+### Features
+
+* **build:** added Phar version to release pipeline ([127bda3](https://github.com/EcomDev/mysql-to-jsonl/commit/127bda3933a6c5be40eac89a5b2524d3ac7ebaab))
+* **command:** added `mysql2jsonl export` command ([127bda3](https://github.com/EcomDev/mysql-to-jsonl/commit/127bda3933a6c5be40eac89a5b2524d3ac7ebaab))
+* **command:** added `mysql2jsonl import` command ([127bda3](https://github.com/EcomDev/mysql-to-jsonl/commit/127bda3933a6c5be40eac89a5b2524d3ac7ebaab))
+* **config:** added `batchSize` setting ([127bda3](https://github.com/EcomDev/mysql-to-jsonl/commit/127bda3933a6c5be40eac89a5b2524d3ac7ebaab))
+* **config:** added `concurrency` settings ([127bda3](https://github.com/EcomDev/mysql-to-jsonl/commit/127bda3933a6c5be40eac89a5b2524d3ac7ebaab))
+* **config:** added `importMode` setting of `truncate` and `update` ([127bda3](https://github.com/EcomDev/mysql-to-jsonl/commit/127bda3933a6c5be40eac89a5b2524d3ac7ebaab))
+* **config:** added `includeTables` and `excludeTables` rules ([127bda3](https://github.com/EcomDev/mysql-to-jsonl/commit/127bda3933a6c5be40eac89a5b2524d3ac7ebaab))
+* **config:** created JSONSchema for configuration files ([127bda3](https://github.com/EcomDev/mysql-to-jsonl/commit/127bda3933a6c5be40eac89a5b2524d3ac7ebaab))
+* mysql2json import/export tool ([127bda3](https://github.com/EcomDev/mysql-to-jsonl/commit/127bda3933a6c5be40eac89a5b2524d3ac7ebaab))
+
+
+### Miscellaneous Chores
+
+* **docs:** added README with basic info ([96b37c6](https://github.com/EcomDev/mysql-to-jsonl/commit/96b37c621ff02611d7bae9558f2e622e78de7824))
+* **main:** release 1.0.0 ([0df49cb](https://github.com/EcomDev/mysql-to-jsonl/commit/0df49cb34f8f0455e39ab02fe9bb6c423801fd01))
+
 ## 1.0.0 (2025-01-22)
 
 
