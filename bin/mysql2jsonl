@@ -9,7 +9,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 $application = new Application(
     basename(__FILE__),
-    '1.0.0'
+    'x-release-please-version'
 );
 
 $application->addCommands([
