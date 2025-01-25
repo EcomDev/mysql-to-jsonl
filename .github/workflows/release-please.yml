@@ -19,7 +19,7 @@ jobs:
     needs: verify-release
     runs-on: ubuntu-24.04
     outputs:
-      releases_created: ${{ steps.release.outputs.release_created }}
+      release_created: ${{ steps.release.outputs.release_created }}
       tag: ${{ steps.release.outputs.tag_name }}
     steps:
       - uses: googleapis/release-please-action@v4
@@ -29,7 +29,7 @@ jobs:
   upload_phar:
     needs: release-please
     runs-on: ubuntu-24.04
-    if: ${{ needs.release-please.outputs.releases_created == true }}
+    if: ${{ needs.release-please.outputs.release_created == true }}
     steps:
       - uses: actions/checkout@v4
         with:

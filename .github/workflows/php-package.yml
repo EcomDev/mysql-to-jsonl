@@ -49,4 +49,8 @@ jobs:
       - name: Build package
         run: |
           chmod +x ./phar-composer-${{ env.PHAR_TOOL_VERSION }}.phar
-          ./phar-composer-${{ env.PHAR_TOOL_VERSION }}.phar build ./ mysql2json
+          ./phar-composer-${{ env.PHAR_TOOL_VERSION }}.phar build ./ mysql2jsonl
+     
+
+
+
