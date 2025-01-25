@@ -98,8 +98,13 @@ class ImportCommand extends Command
         )->create();
 
         $inputSource = new JsonImportSourceFactory($input->getArgument('directory'), $config);
+        $tables = $inputSource->listTables();
 
-        foreach ($inputSource->listTables() as $table) {
+        foreach ($tables as $table) {
+            $importer->cleanTable($table);
+        }
+
+        foreach ($tables as $table) {
             $importer->importTable($table, $progressNotifier);
         }
 

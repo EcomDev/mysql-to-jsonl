@@ -7,13 +7,13 @@ use EcomDev\MySQL2JSONL\Sql\InsertOnDuplicate;
 use EcomDev\MySQL2JSONL\TableEntry;
 use PDO;
 
-final readonly class BlockingImportService implements ImportService
+final readonly class BlockingImportService implements ImportService, ImportCleanupService
 {
     public function __construct(
         private PDO $connection,
         private InsertOnDuplicate $insertOnDuplicate,
         private ImportSourceFactory $sourceFactory,
-        private ImportMode $mode,
+        private BlockingImportCleanupService $cleanupService,
         private int $batchSize
     ) {
     }
@@ -23,10 +23,6 @@ final readonly class BlockingImportService implements ImportService
         $source = $this->sourceFactory->create($table);
 
         $columns = $source->header();
-
-        if ($this->mode->isTruncate()) {
-            $this->connection->prepare(sprintf('TRUNCATE TABLE `%s`', $table->name))->execute();
-        }
 
         $statementCache = InsertStatementCache::create(
             $this->connection,
@@ -60,5 +56,10 @@ final readonly class BlockingImportService implements ImportService
 
         $this->connection->commit();
         $notifier->finish($table->name);
+    }
+
+    public function cleanTable(TableEntry $table): void
+    {
+        $this->cleanupService->cleanTable($table);
     }
 }

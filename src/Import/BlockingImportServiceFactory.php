@@ -19,14 +19,18 @@ final readonly class BlockingImportServiceFactory implements ImportServiceFactor
         return new self($configuration, $importSourceFactory, new InsertOnDuplicate());
     }
 
-    public function create(): ImportService
+    public function create(): BlockingImportService
     {
+        $connection = $this->configuration->createPDOConnection();
         return new BlockingImportService(
-            $this->configuration->createPDOConnection(),
+            $connection,
             $this->insertOnDuplicate,
             $this->importSourceFactory,
-            $this->configuration->importMode,
-            $this->configuration->batchSize
+            BlockingImportCleanupService::create(
+                $this->configuration->importMode,
+                $connection,
+            ),
+            $this->configuration->batchSize,
         );
     }
 }

@@ -38,6 +38,7 @@ class WorkerImportTableTest extends TestCase implements ProgressNotifier
         $service = WorkerImportServiceFactory::fromConfiguration($container->configuration, $this->path)
             ->create();
 
+        $service->cleanTable(TableEntry::fromName('store'));
         $service->importTable(TableEntry::fromName('store')->withRows(2), $this);
         $service->await();
 

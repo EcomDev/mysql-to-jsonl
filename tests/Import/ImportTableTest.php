@@ -43,6 +43,8 @@ class ImportTableTest extends TestCase implements ProgressNotifier
         );
 
         $import = $factory->create();
+
+        $import->cleanTable($source->table);
         $import->importTable($source->table, $this);
 
         $connection = $this->containerWithConfig->configuration->createPDOConnection();
@@ -73,6 +75,7 @@ class ImportTableTest extends TestCase implements ProgressNotifier
         );
 
         $import = $factory->create();
+        $import->cleanTable($source->table);
         $import->importTable($source->table, $this);
 
         $connection = $this->containerWithConfig->configuration->createPDOConnection();
@@ -105,6 +108,7 @@ class ImportTableTest extends TestCase implements ProgressNotifier
         );
 
         $import = $factory->create();
+        $import->cleanTable($source->table);
         $import->importTable($source->table, $this);
 
         $this->assertEquals(
@@ -138,6 +142,7 @@ class ImportTableTest extends TestCase implements ProgressNotifier
         );
 
         $import = $factory->create();
+        $import->cleanTable($source->table);
         $import->importTable($source->table, $this);
 
         $connection = $this->containerWithConfig->configuration->createPDOConnection();

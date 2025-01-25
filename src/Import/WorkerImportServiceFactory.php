@@ -19,7 +19,7 @@ final readonly class WorkerImportServiceFactory implements ImportServiceFactory
     private function __construct(
         private Configuration $configuration,
         private WorkerPool    $workerPool,
-        private string        $inputDirectory,
+        private string        $inputDirectory
     ) {
     }
 
@@ -38,7 +38,11 @@ final readonly class WorkerImportServiceFactory implements ImportServiceFactory
             $this->configuration,
             $this->workerPool,
             $this->inputDirectory,
-            new PendingExecution()
+            new PendingExecution(),
+            BlockingImportCleanupService::create(
+                $this->configuration->importMode,
+                $this->configuration->createPDOConnection()
+            ),
         );
     }
 }

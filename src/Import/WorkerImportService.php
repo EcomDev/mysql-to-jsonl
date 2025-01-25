@@ -18,13 +18,14 @@ use EcomDev\MySQL2JSONL\TableEntry;
 
 use function Amp\async;
 
-final readonly class WorkerImportService implements ImportService
+final readonly class WorkerImportService implements ImportService, ImportCleanupService
 {
     public function __construct(
         private Configuration $configuration,
         private WorkerPool $workerPool,
         private string $inputDirectory,
         private PendingExecution $pendingExecution,
+        private ImportCleanupService $cleanupService,
     ) {
     }
 
@@ -50,5 +51,11 @@ final readonly class WorkerImportService implements ImportService
     {
         $this->pendingExecution->await();
         $this->workerPool->shutdown();
+    }
+
+
+    public function cleanTable(TableEntry $table): void
+    {
+        $this->cleanupService->cleanTable($table);
     }
 }

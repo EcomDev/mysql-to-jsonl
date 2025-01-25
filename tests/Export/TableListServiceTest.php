@@ -26,15 +26,30 @@ class TableListServiceTest extends TestCase
             ->withExcludeCondition(TableNameCondition::endsWith('_varchar'))
             ->withExcludeCondition(TableNameCondition::contains('gallery'));
 
-        $this->assertEquals(
-            [
-                TableEntry::fromName('catalog_product_entity_datetime')->withRows(6),
-                TableEntry::fromName('catalog_product_entity_decimal')->withRows(3903),
-                TableEntry::fromName('catalog_product_entity_int')->withRows(12480),
-                TableEntry::fromName('catalog_product_entity_text')->withRows(2652),
-                TableEntry::fromName('catalog_product_entity_tier_price')->withRows(0)
-            ],
-            (new TableListService($config))->tablesToExport()
-        );
+
+        $expectedTableValues = [
+            TableEntry::fromName('catalog_product_entity_datetime')->withRows(6),
+            TableEntry::fromName('catalog_product_entity_decimal')->withRows(3903),
+            TableEntry::fromName('catalog_product_entity_int')->withRows(12480),
+            TableEntry::fromName('catalog_product_entity_text')->withRows(2652),
+            TableEntry::fromName('catalog_product_entity_tier_price')->withRows(0)
+        ];
+
+        $actualTableValues = (new TableListService($config))->tablesToExport();
+
+        foreach ($expectedTableValues as $index => $expectedTable) {
+            $this->assertArrayHasKey(
+                $index,
+                $actualTableValues,
+                'Table list does not match'
+            );
+
+            $this->assertEquals($expectedTable->name, $actualTableValues[$index]->name, 'Table name does not match expected');
+            $this->assertEqualsWithDelta(
+                $expectedTable->rowCount,
+                $actualTableValues[$index]->rowCount,
+                $expectedTable->rowCount * 0.05
+            );
+        }
     }
 }

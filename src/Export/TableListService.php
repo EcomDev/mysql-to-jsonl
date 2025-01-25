@@ -11,6 +11,7 @@ namespace EcomDev\MySQL2JSONL\Export;
 
 use EcomDev\MySQL2JSONL\Configuration;
 use EcomDev\MySQL2JSONL\TableEntry;
+use PDO;
 
 final readonly class TableListService
 {
@@ -21,12 +22,12 @@ final readonly class TableListService
     public function tablesToExport(): array
     {
         $connection = $this->configuration->createPDOConnection();
-        $connection->prepare('SET information_schema_stats_expiry=0')->execute();
 
         $result = $connection->prepare(
             'SELECT TABLE_NAME, TABLE_ROWS FROM information_schema.tables'
             . ' WHERE TABLE_SCHEMA = SCHEMA() AND TABLE_TYPE = ?'
         );
+
         $result->execute(['BASE TABLE']);
 
         $tables = [];
