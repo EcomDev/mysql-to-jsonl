@@ -7,11 +7,11 @@
       "bump-patch-for-minor-pre-major": false,
       "draft": false,
       "include-v-in-tag": false,
-      "prerelease": false,
-      "extra-files": [
-        "bin/mysql2jsonl"
-      ]
+      "prerelease": false
     }
   },
+  "extra-files": [
+    "bin/mysql2jsonl"
+  ],
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"
 }
