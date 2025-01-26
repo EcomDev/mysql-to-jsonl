@@ -19,8 +19,9 @@ jobs:
     needs: verify-release
     runs-on: ubuntu-24.04
     outputs:
-      release_created: ${{ steps.release.outputs.releases_created }}
+      release_created: ${{ steps.release.outputs.release_created }}
       tag: ${{ steps.release.outputs.tag_name }}
+      info: ${{ toJSON(steps.release.outputs) }}
     steps:
       - uses: googleapis/release-please-action@v4
         id: release
@@ -38,6 +39,8 @@ jobs:
         with:
           name: build-${{ github.sha }}-8.3
           path: mysql2jsonl
+      - name: Print for debug release output
+        run: echo ${{ needs.release-please.outputs.info }}
       - name: Release artifact
         run: gh release upload ${{ needs.release-please.outputs.tag }} mysql2jsonl
         env:
