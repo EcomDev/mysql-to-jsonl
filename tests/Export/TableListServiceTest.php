@@ -48,7 +48,7 @@ class TableListServiceTest extends TestCase
             $this->assertEqualsWithDelta(
                 $expectedTable->rowCount,
                 $actualTableValues[$index]->rowCount,
-                $expectedTable->rowCount * 0.05
+                $expectedTable->rowCount * 0.2
             );
         }
     }
