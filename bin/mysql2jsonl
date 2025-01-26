@@ -7,9 +7,13 @@ use Symfony\Component\Console\Application;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+// x-release-please-start-version
+const VERSION = '1.4.0';
+// x-release-please-end
+
 $application = new Application(
     basename(__FILE__),
-    'x-release-please-version'
+    VERSION
 );
 
 $application->addCommands([
