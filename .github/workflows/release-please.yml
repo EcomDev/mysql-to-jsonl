@@ -19,7 +19,7 @@ jobs:
     needs: verify-release
     runs-on: ubuntu-24.04
     outputs:
-      release_created: ${{ steps.release.outputs.release_created }}
+      release_created: ${{ steps.release.outputs.releases_created }}
       tag: ${{ steps.release.outputs.tag_name }}
     steps:
       - uses: googleapis/release-please-action@v4
@@ -27,27 +27,18 @@ jobs:
         with:
           release-type: php
   upload_phar:
-    needs: release-please
+    needs:
+      - release-please
+      - verify-release
     runs-on: ubuntu-24.04
-    if: ${{ needs.release-please.outputs.release_created == true }}
+    if: ${{ needs.release-please.outputs.release_created }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Download release artifact
+        uses: actions/download-artifact@v4
         with:
-          ref: ${{ needs.release-please.outputs.tag }}
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.2
-          tools: composer:v2
-      - name: Download build package
-        run: gh release download v${{ env.PHAR_TOOL_VERSION }} -R=${{ env.PHAR_TOOL_REPOSITORY }}
-      - name: Build package
-        run: |
-          chmod +x ./phar-composer-${{ env.PHAR_TOOL_VERSION }}.phar
-          ./phar-composer-${{ env.PHAR_TOOL_VERSION }}.phar build ./ mysql2json
-        env:
-          GH_TOKEN: ${{ github.token }}
-      - name: Upload package
-        run: gh release upload ${{ needs.release-please.outputs.tag }} mysql2json
+          name: build-${{ github.sha }}-8.3
+          path: mysql2jsonl
+      - name: Release artifact
+        run: gh release upload ${{ needs.release-please.outputs.tag }} mysql2jsonl
         env:
           GH_TOKEN: ${{ github.token }}

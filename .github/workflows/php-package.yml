@@ -50,7 +50,7 @@ jobs:
         run: |
           chmod +x ./phar-composer-${{ env.PHAR_TOOL_VERSION }}.phar
           ./phar-composer-${{ env.PHAR_TOOL_VERSION }}.phar build ./ mysql2jsonl
-     
-
-
-
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build-${{ github.sha }}-${{ matrix.php-version }}
+          path: mysql2jsonl
