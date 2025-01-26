@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.4.0](https://github.com/EcomDev/mysql-to-jsonl/compare/v1.3.0...v1.4.0) (2025-01-26)
+
+
+### Features
+
+* cleanup of table data is now an external service ([d0053dc](https://github.com/EcomDev/mysql-to-jsonl/commit/d0053dc39c9fad9bc14554effbba75e110071201))
+
+
+### Bug Fixes
+
+* add bigger delta for table row count ([2ba2a88](https://github.com/EcomDev/mysql-to-jsonl/commit/2ba2a885b0a022ea42460cc68d7c825c5b47cc0a))
+
+
+### Miscellaneous Chores
+
+* **bin:** auto-update version string in binary ([ddbfee5](https://github.com/EcomDev/mysql-to-jsonl/commit/ddbfee5f1e94662be5d2f4dd76d5b950a9d2f6bf))
+* **build:** hopefully fixed phar release upload ([915c19c](https://github.com/EcomDev/mysql-to-jsonl/commit/915c19c828e19d16b06707c80555910a51912a62))
+* **docs:** add an example of configuration JSON ([9a2c138](https://github.com/EcomDev/mysql-to-jsonl/commit/9a2c138091c0c525c34fd54e3ad98a833afdf126))
+
 ## [1.3.0](https://github.com/EcomDev/mysql-to-jsonl/compare/v1.2.0...v1.3.0) (2025-01-22)
 
 
