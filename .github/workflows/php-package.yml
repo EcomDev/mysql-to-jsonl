@@ -38,6 +38,14 @@ jobs:
           php-version: ${{ matrix.php-version }}
           tools: composer:v2
           coverage: xdebug3
+      - name: Composer Cache
+        id: composer-cache
+        run: |
+          echo "cache_directory=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+      - uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.cache_directory }}
+          key: ${{ runner.os }}-composer
       - run: composer install
         shell: bash
       - run: composer test
