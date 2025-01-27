@@ -46,6 +46,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           tools: composer:v2
+          extensions: bz2
           coverage: xdebug3
       - name: Composer Cache
         id: composer-cache
