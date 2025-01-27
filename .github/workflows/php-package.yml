@@ -2,6 +2,7 @@ name: PHP Package
 env:
   PHAR_TOOL_VERSION: 1.4.0
   PHAR_TOOL_REPOSITORY: clue/phar-composer
+  DEFAULT_PHP_VERSION: 8.3
 on:
   push:
   pull_request:
@@ -15,8 +16,16 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2
+          php-version: ${{ env.DEFAULT_PHP_VERSION }}
           tools: composer:v2
+      - name: Composer Cache
+        id: composer-cache
+        run: |
+          echo "cache_directory=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+      - uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.cache_directory }}
+          key: ${{ runner.os }}-composer
       - run: composer install
         shell: bash
       - run: composer format:check
