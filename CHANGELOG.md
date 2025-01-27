@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.4.1](https://github.com/EcomDev/mysql-to-jsonl/compare/v1.4.0...1.4.1) (2025-01-27)
+
+
+### Bug Fixes
+
+* release artifact upload process ([4b78594](https://github.com/EcomDev/mysql-to-jsonl/commit/4b785944c569186066c11d5a3c6cf24d6ca6075d))
+* **release-please:** remove release type from arguments ([8e0dc32](https://github.com/EcomDev/mysql-to-jsonl/commit/8e0dc321c3b4fc40d3649e0889dbe8d26c2b5d86))
+
+
+### Miscellaneous Chores
+
+* add composer cache to style checks ([b52862e](https://github.com/EcomDev/mysql-to-jsonl/commit/b52862e0dcc70014a20d3225651be41f0b2ad57a))
+* add debuging info ([cea3458](https://github.com/EcomDev/mysql-to-jsonl/commit/cea3458c248b0850d6213de2881d5c4ef6f8021c))
+* create artifact during php package build ([40067c8](https://github.com/EcomDev/mysql-to-jsonl/commit/40067c8a33c8732d6b2d488488a9a70b39261e87))
+* move release output to release-please job ([6c39f64](https://github.com/EcomDev/mysql-to-jsonl/commit/6c39f647a17cf561185e31b4e2998824a5312829))
+* **phar:** add bz2 to build ([c75f318](https://github.com/EcomDev/mysql-to-jsonl/commit/c75f3183c234af52880a4cd8dff874227a25d672))
+* **phar:** optimize size of artifact build ([8f8a2c9](https://github.com/EcomDev/mysql-to-jsonl/commit/8f8a2c9dbd8b4651926f9f9d14ba7f076eb6bb7c))
+* proper version string in app binary ([97a3752](https://github.com/EcomDev/mysql-to-jsonl/commit/97a375246e3f1a0dcb3adfcc8e91f2f4d31a79c4))
+* **tests:** add composer cache for build process ([b940f93](https://github.com/EcomDev/mysql-to-jsonl/commit/b940f935e233a72879e3eb39f313324f3d779ad5))
+
 ## [1.4.0](https://github.com/EcomDev/mysql-to-jsonl/compare/v1.3.0...v1.4.0) (2025-01-26)
 
 
