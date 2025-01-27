@@ -24,6 +24,7 @@ jobs:
           path: mysql2jsonl
       - uses: googleapis/release-please-action@v4
         id: release
+      - uses: actions/checkout@v4
       - name: Upload Release Artifact
         if: ${{ steps.release.outputs.release_created }}
         env:
