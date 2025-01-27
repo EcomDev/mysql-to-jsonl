@@ -17,14 +17,15 @@ jobs:
     needs: verify-release
     runs-on: ubuntu-24.04
     steps:
+
+      - uses: googleapis/release-please-action@v4
+        id: release
+      - uses: actions/checkout@v4
       - name: Download release artifact
         uses: actions/download-artifact@v4
         with:
           name: build-${{ github.sha }}-${{ env.DEFAULT_PHP_VERSION }}
           path: mysql2jsonl
-      - uses: googleapis/release-please-action@v4
-        id: release
-      - uses: actions/checkout@v4
       - name: Upload Release Artifact
         if: ${{ steps.release.outputs.release_created }}
         env:
