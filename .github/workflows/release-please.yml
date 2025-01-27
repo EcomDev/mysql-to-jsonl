@@ -3,8 +3,7 @@ on:
     branches:
       - main
 env:
-  PHAR_TOOL_VERSION: 1.4.0
-  PHAR_TOOL_REPOSITORY: clue/phar-composer
+  DEFAULT_PHP_VERSION: 8.3
 
 permissions:
   contents: write
@@ -18,29 +17,18 @@ jobs:
   release-please:
     needs: verify-release
     runs-on: ubuntu-24.04
-    outputs:
-      release_created: ${{ steps.release.outputs.release_created }}
-      tag: ${{ steps.release.outputs.tag_name }}
-    steps:
-      - uses: googleapis/release-please-action@v4
-        id: release
-        with:
-          release-type: php
-      - name: Output release variables
-        run: echo ${{ toJSON(steps.release.outputs) }}
-  upload_phar:
-    needs:
-      - release-please
-      - verify-release
-    runs-on: ubuntu-24.04
-    if: ${{ needs.release-please.outputs.release_created }}
     steps:
       - name: Download release artifact
         uses: actions/download-artifact@v4
         with:
-          name: build-${{ github.sha }}-8.3
+          name: build-${{ github.sha }}-${{ env.DEFAULT_PHP_VERSION }}
           path: mysql2jsonl
-      - name: Release artifact
-        run: gh release upload ${{ needs.release-please.outputs.tag }} mysql2jsonl
+      - uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          release-type: php
+      - name: Upload Release Artifact
+        if: ${{ steps.release.outputs.release_created }}
         env:
-          GH_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload ${{ steps.release.outputs.tag_name }} ./mysql2jsonl
