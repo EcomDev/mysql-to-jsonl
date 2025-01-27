@@ -8,7 +8,7 @@ use Symfony\Component\Console\Application;
 require_once __DIR__ . '/../vendor/autoload.php';
 
 // x-release-please-start-version
-const VERSION = '1.4.3';
+const VERSION = '1.4.4';
 // x-release-please-end
 
 $application = new Application(
