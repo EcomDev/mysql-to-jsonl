@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.5](https://github.com/EcomDev/mysql-to-jsonl/compare/1.4.4...1.4.5) (2025-01-27)
+
+
+### Bug Fixes
+
+* **import:** iterator was already closed error ([7c27286](https://github.com/EcomDev/mysql-to-jsonl/commit/7c27286e8955d04c81c6187bb4dc7468dbf647ac))
+
 ## [1.4.4](https://github.com/EcomDev/mysql-to-jsonl/compare/1.4.3...1.4.4) (2025-01-27)
 
 
