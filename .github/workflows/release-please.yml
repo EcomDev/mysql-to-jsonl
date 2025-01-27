@@ -4,7 +4,6 @@ on:
       - main
 env:
   DEFAULT_PHP_VERSION: 8.3
-
 permissions:
   contents: write
   pull-requests: write
@@ -25,8 +24,6 @@ jobs:
           path: mysql2jsonl
       - uses: googleapis/release-please-action@v4
         id: release
-        with:
-          release-type: php
       - name: Upload Release Artifact
         if: ${{ steps.release.outputs.release_created }}
         env:
