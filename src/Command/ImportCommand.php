@@ -98,7 +98,7 @@ class ImportCommand extends Command
         )->create();
 
         $inputSource = new JsonImportSourceFactory($input->getArgument('directory'), $config);
-        $tables = $inputSource->listTables();
+        $tables = iterator_to_array($inputSource->listTables());
 
         foreach ($tables as $table) {
             $importer->cleanTable($table);
