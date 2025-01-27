@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.4.2](https://github.com/EcomDev/mysql-to-jsonl/compare/1.4.1...1.4.2) (2025-01-27)
+
+
+### Miscellaneous Chores
+
+* **main:** release 1.4.1 ([#10](https://github.com/EcomDev/mysql-to-jsonl/issues/10)) ([bec5bf5](https://github.com/EcomDev/mysql-to-jsonl/commit/bec5bf5a8bbe5c273a33895ca737212e2ca841d4))
+* release 1.4.1 ([d37f024](https://github.com/EcomDev/mysql-to-jsonl/commit/d37f0248df8fe8ac13afbdee2cc6bf61a88e3580))
+* release 1.4.2 ([66055de](https://github.com/EcomDev/mysql-to-jsonl/commit/66055de5c729f1a4df90676da88929695c310fa4))
+
 ## [1.4.1](https://github.com/EcomDev/mysql-to-jsonl/compare/1.4.1...1.4.1) (2025-01-27)
 
 
