@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.3](https://github.com/EcomDev/mysql-to-jsonl/compare/1.4.2...1.4.3) (2025-01-27)
+
+
+### Bug Fixes
+
+* **phar:** artifact release process was fixed ([4efdfdd](https://github.com/EcomDev/mysql-to-jsonl/commit/4efdfddcc90845c1e73618141d547a8aa68bc1ef))
+
 ## [1.4.2](https://github.com/EcomDev/mysql-to-jsonl/compare/1.4.1...1.4.2) (2025-01-27)
 
 
